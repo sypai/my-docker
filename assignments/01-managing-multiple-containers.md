@@ -2,7 +2,7 @@
 
 ### Task 
 
--   `Run a `nginx`, a `mysql` and a `httpd`(apache) server. Run all of them in the background with a name.
+-   Run a `nginx`, a `mysql` and a `httpd`(apache) server. Run all of them in the background with a name.
 -   `nginx` should listen on `80:80`, `httpd` on `8080:80`, `mysql` on `3306:3306`
 -   When running `mysql`, use the `--env` option to pass in `MYSQL_RANDOM_ROOT_PASSWORD=yes`, Use logs on mysql to find the random password it created on startup.
 -   Clean it all up with `stop` and `rm`.
