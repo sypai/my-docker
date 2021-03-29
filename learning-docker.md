@@ -82,3 +82,24 @@ Display the running processes of a container
 `docker network prune` Remove all unused networks. Unused networks are those which are not referenced by any containers.
 
 `docker network rm` Remove one or more networks by name or identifier. To remove a network, you must disconnect any containers connected to it.
+
+## Docker Images
+
+`docker image build` Build an image from a Dockerfile
+
+`docker image history` Show the history of an image
+
+`docker image inspect` Display detailed information on one or more images
+
+`docker image ls` List images
+
+`docker image prune` Remove all dangling images. If `-a` is specified, will also remove all images not referenced by any container
+
+`docker image pull NAME` Pull an image or a repository from a registry
+
+`docker image push NAME` Push an image or a repository to a registry
+
+`docker image rm` Remove one or more images
+
+`docker image tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]` Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+
