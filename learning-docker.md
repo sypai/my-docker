@@ -119,3 +119,42 @@ The volumes are stored on the host, independent of the container life cycle. Thi
 
 `docker volume rm [OPTIONS] VOLUME [VOLUME...]` Remove one or more volumes. You cannot remove a volume that is in use by a container.
 
+### Persistent Data using Bind Mounts
+When you use a bind mount, a file or directory on the host machine is mounted into a container. The file or directory is referenced by its absolute path on the host machine. By contrast, when you use a volume, a new directory is created within Docker’s storage directory on the host machine, and Docker manages that directory’s contents.
+
+The file or directory does not need to exist on the Docker host already. It is created on demand if it does not yet exist. Bind mounts are very performant, but they rely on the host machine’s filesystem having a specific directory structure available. If you are developing new Docker applications, consider using named volumes instead. You can’t use Docker CLI commands to directly manage bind mounts.
+
+### Using `-v` or `--mount` flag
+
+In general, --mount is more explicit and verbose. The biggest difference is that the -v syntax combines all the options together in one field, while the --mount syntax separates them.
+
+`-v` or `--volume`  Consists of three fields, separated by colon characters `(:)`. The fields must be in the correct order.
+-   In the case of bind mounts, the first field is the path to the file or directory on the host machine.
+-   The second field is the path where the file or directory is mounted in the container.
+-   The third field is optional, and is a comma-separated list of options, such as `ro`, `z`, and `Z`. These options are discussed below.
+
+`--mount`  Consists of multiple key-value pairs, separated by commas and each consisting of a `<key>=<value>` tuple. The --mount syntax is more verbose than -v or --volume, but the order of the keys is not significant, and the value of the flag is easier to understand.
+-   The `type` of the mount, which can be bind, volume, or tmpfs. This topic discusses bind mounts, so the type is always bind.
+-   The `source` of the mount. For bind mounts, this is the path to the file or directory on the Docker daemon host. May be specified as source or src.
+-   The `destination` takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
+-   The `readonly` option, if present, causes the bind mount to be mounted into the container as read-only.
+-   The `bind-propagation` option, if present, changes the bind propagation. May be one of rprivate, private, rshared, shared, rslave, slave.
+-   The --mount flag does not support `z` or `Z` options for modifying selinux labels.
+
+
+```python
+# Using --mount
+docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app \
+  nginx:latest
+
+
+# Using -v
+docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app \
+  nginx:latest
+```
